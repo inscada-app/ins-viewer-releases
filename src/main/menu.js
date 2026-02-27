@@ -1,57 +1,57 @@
-const { Menu, shell, app, BrowserWindow } = require('electron');
-const path = require('path');
+const { Menu, shell, app } = require('electron');
+const { t } = require('./locale');
 
 function create({ onNewWindow, onSettings, onAbout }) {
   const template = [
     {
-      label: 'Dosya',
+      label: t('menu.file'),
       submenu: [
         {
-          label: 'Yeni Pencere',
+          label: t('menu.newWindow'),
           accelerator: 'CmdOrCtrl+N',
           click: () => onNewWindow(),
         },
         { type: 'separator' },
         {
-          label: 'Ayarlar',
+          label: t('menu.settings'),
           accelerator: 'CmdOrCtrl+,',
           click: () => onSettings(),
         },
         { type: 'separator' },
         {
-          label: 'Çıkış',
+          label: t('menu.quit'),
           accelerator: 'CmdOrCtrl+Q',
           click: () => app.quit(),
         },
       ],
     },
     {
-      label: 'Görünüm',
+      label: t('menu.view'),
       submenu: [
-        { role: 'reload', label: 'Yenile' },
-        { role: 'forceReload', label: 'Zorla Yenile' },
+        { role: 'reload', label: t('menu.reload') },
+        { role: 'forceReload', label: t('menu.forceReload') },
         { type: 'separator' },
-        { role: 'resetZoom', label: 'Varsayılan Yakınlaştırma' },
-        { role: 'zoomIn', label: 'Yakınlaştır' },
-        { role: 'zoomOut', label: 'Uzaklaştır' },
+        { role: 'resetZoom', label: t('menu.resetZoom') },
+        { role: 'zoomIn', label: t('menu.zoomIn') },
+        { role: 'zoomOut', label: t('menu.zoomOut') },
         { type: 'separator' },
-        { role: 'togglefullscreen', label: 'Tam Ekran' },
+        { role: 'togglefullscreen', label: t('menu.fullscreen') },
       ],
     },
     {
-      label: 'Yardım',
+      label: t('menu.help'),
       submenu: [
         {
-          label: 'Hakkında',
+          label: t('menu.about'),
           click: () => onAbout(),
         },
         { type: 'separator' },
         {
-          label: 'inSCADA Web Sitesi',
+          label: t('menu.website'),
           click: () => shell.openExternal('https://www.inscada.com'),
         },
         {
-          label: 'Dokümantasyon',
+          label: t('menu.docs'),
           click: () => shell.openExternal('https://inscada.gitbook.io'),
         },
       ],

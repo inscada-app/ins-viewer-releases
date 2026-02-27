@@ -1,5 +1,6 @@
 const { ipcMain, app, shell } = require('electron');
 const settingsStore = require('./settings-store');
+const locale = require('./locale');
 
 function register(deps) {
   const { connectionChecker, onSettingsSaved } = deps;
@@ -27,6 +28,10 @@ function register(deps) {
     if (allowed.some((prefix) => url.startsWith(prefix))) {
       shell.openExternal(url);
     }
+  });
+
+  ipcMain.handle('get-locale-strings', () => {
+    return locale.getStrings();
   });
 }
 

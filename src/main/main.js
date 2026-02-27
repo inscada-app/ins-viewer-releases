@@ -6,10 +6,12 @@ const ConnectionChecker = require('./connection-checker');
 const tray = require('./tray');
 const ipcHandlers = require('./ipc-handlers');
 const menu = require('./menu');
+const locale = require('./locale');
 
 // Set Chromium locale before app is ready
 const earlySettings = settingsStore.load();
 app.commandLine.appendSwitch('lang', earlySettings.language || 'tr');
+locale.setLocale(earlySettings.appLanguage || 'tr');
 
 // Single instance lock
 const gotLock = app.requestSingleInstanceLock();
@@ -23,6 +25,10 @@ let settingsWindow = null;
 let aboutWindow = null;
 let isQuitting = false;
 let connectionChecker = null;
+
+// Store menu/tray callbacks so we can rebuild them
+let menuCallbacks = null;
+let trayCallbacks = null;
 
 function createSplashWindow() {
   splashWindow = new BrowserWindow({
@@ -39,7 +45,10 @@ function createSplashWindow() {
       nodeIntegration: false,
     },
   });
-  splashWindow.loadFile(path.join(__dirname, '../renderer/splash.html'));
+  const lang = locale.getLocale();
+  splashWindow.loadFile(path.join(__dirname, '../renderer/splash.html'), {
+    query: { lang },
+  });
   return splashWindow;
 }
 
@@ -103,12 +112,12 @@ function createSettingsWindow() {
 
   settingsWindow = new BrowserWindow({
     width: 480,
-    height: 500,
+    height: 540,
     resizable: false,
     parent: mainWindow,
     modal: true,
     show: false,
-    title: 'Ayarlar',
+    title: locale.t('title.settings'),
     icon: path.join(__dirname, '../../assets/icon.png'),
     webPreferences: {
       contextIsolation: true,
@@ -144,7 +153,7 @@ function createAboutWindow() {
     parent: mainWindow,
     modal: true,
     show: false,
-    title: 'Hakkında',
+    title: locale.t('title.about'),
     icon: path.join(__dirname, '../../assets/icon.png'),
     webPreferences: {
       contextIsolation: true,
@@ -198,11 +207,23 @@ function createNewWindow() {
 }
 
 function applyLanguage(lang) {
-  const locale = lang || 'tr';
+  const browserLocale = lang || 'tr';
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders['Accept-Language'] = `${locale},en;q=0.9`;
+    details.requestHeaders['Accept-Language'] = `${browserLocale},en;q=0.9`;
     callback({ requestHeaders: details.requestHeaders });
   });
+}
+
+function rebuildMenu() {
+  if (menuCallbacks) {
+    menu.create(menuCallbacks);
+  }
+}
+
+function rebuildTray() {
+  if (mainWindow && trayCallbacks) {
+    tray.create(mainWindow, trayCallbacks);
+  }
 }
 
 function showConnecting() {
@@ -259,20 +280,30 @@ app.whenReady().then(() => {
       connectionChecker.setUrl(newSettings.url);
       app.setLoginItemSettings({ openAtLogin: newSettings.autoStart });
       applyLanguage(newSettings.language);
+
+      // Handle app language change
+      const newAppLang = newSettings.appLanguage || 'tr';
+      if (newAppLang !== locale.getLocale()) {
+        locale.setLocale(newAppLang);
+        rebuildMenu();
+        rebuildTray();
+      }
+
       // Trigger a re-check with new URL
       connectionChecker.check();
     },
   });
 
   // Setup application menu
-  menu.create({
+  menuCallbacks = {
     onNewWindow: () => createNewWindow(),
     onSettings: () => createSettingsWindow(),
     onAbout: () => createAboutWindow(),
-  });
+  };
+  menu.create(menuCallbacks);
 
   // Setup tray
-  tray.create(mainWindow, {
+  trayCallbacks = {
     onSettings: () => createSettingsWindow(),
     onQuit: () => {
       isQuitting = true;
@@ -280,7 +311,8 @@ app.whenReady().then(() => {
       connectionChecker.stop();
       app.quit();
     },
-  });
+  };
+  tray.create(mainWindow, trayCallbacks);
 
   // Start connection check
   connectionChecker.check().then((online) => {

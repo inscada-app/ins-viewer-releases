@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
   <title>inSCADA Viewer</title>
   <link rel="stylesheet" href="splash.css">
 </head>
@@ -16,7 +16,15 @@
     </div>
     <h1>inSCADA Viewer</h1>
     <div class="spinner"></div>
-    <p>Yükleniyor...</p>
+    <p id="splash-loading">Yükleniyor...</p>
   </div>
+  <script>
+    // Read lang from query parameter (passed by main process)
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    if (lang === 'en') {
+      document.getElementById('splash-loading').textContent = 'Loading...';
+    }
+  </script>
 </body>
 </html>

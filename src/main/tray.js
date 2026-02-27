@@ -1,9 +1,16 @@
 const { Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
+const { t } = require('./locale');
 
 let tray = null;
 
 function create(mainWindow, { onSettings, onQuit }) {
+  // Destroy previous tray if rebuilding
+  if (tray) {
+    tray.destroy();
+    tray = null;
+  }
+
   const iconPath = path.join(__dirname, '../../assets/tray-icon.png');
   let icon;
   try {
@@ -19,19 +26,19 @@ function create(mainWindow, { onSettings, onQuit }) {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Aç',
+      label: t('tray.open'),
       click: () => {
         mainWindow.show();
         mainWindow.focus();
       },
     },
     {
-      label: 'Ayarlar',
+      label: t('tray.settings'),
       click: () => onSettings(),
     },
     { type: 'separator' },
     {
-      label: 'Çıkış',
+      label: t('tray.quit'),
       click: () => onQuit(),
     },
   ]);

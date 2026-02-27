@@ -8,15 +8,23 @@
 </head>
 <body>
   <div class="settings-container">
-    <h2>Ayarlar</h2>
+    <h2 id="settings-title">Ayarlar</h2>
 
     <div class="form-group">
-      <label for="url">Sunucu URL</label>
+      <label for="url" id="label-url">Sunucu URL</label>
       <input type="url" id="url" placeholder="http://localhost:8081" spellcheck="false">
     </div>
 
     <div class="form-group">
-      <label for="language">Tarayıcı Dili</label>
+      <label for="appLanguage" id="label-appLanguage">Uygulama Dili</label>
+      <select id="appLanguage">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="language" id="label-language">Tarayıcı Dili</label>
       <select id="language">
         <option value="tr">Türkçe</option>
         <option value="en">English</option>
@@ -33,21 +41,21 @@
     <div class="form-group checkbox-group">
       <label>
         <input type="checkbox" id="autoStart">
-        Windows başlangıcında otomatik aç
+        <span id="label-autoStart">Windows başlangıcında otomatik aç</span>
       </label>
     </div>
 
     <div class="form-group checkbox-group">
       <label>
         <input type="checkbox" id="minimizeToTray">
-        Kapatınca sistem tepsisine küçült
+        <span id="label-minimizeToTray">Kapatınca sistem tepsisine küçült</span>
       </label>
     </div>
 
     <div class="form-group checkbox-group">
       <label>
         <input type="checkbox" id="startMinimized">
-        Küçültülmüş olarak başlat
+        <span id="label-startMinimized">Küçültülmüş olarak başlat</span>
       </label>
     </div>
 

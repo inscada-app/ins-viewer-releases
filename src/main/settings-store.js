@@ -8,6 +8,7 @@ const DEFAULTS = {
   minimizeToTray: true,
   startMinimized: false,
   language: 'tr',
+  appLanguage: 'tr',
 };
 
 let filePath;

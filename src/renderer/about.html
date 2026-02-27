@@ -71,7 +71,7 @@
          onerror="this.style.display='none'">
     <h1>inSCADA Viewer</h1>
     <p class="version" id="version">v1.0.0</p>
-    <p class="description">
+    <p class="description" id="about-description">
       Web tabanlı SCADA/HMI panellerinizi<br>
       masaüstü uygulaması olarak görüntüleyin.
     </p>
@@ -79,7 +79,7 @@
       <a href="https://www.inscada.com" id="link-website">www.inscada.com</a>
       <a href="https://inscada.gitbook.io" id="link-docs">Dokümantasyon</a>
     </div>
-    <p class="copyright">&copy; 2025 inSCADA. Tüm hakları saklıdır.</p>
+    <p class="copyright" id="about-copyright">&copy; 2025 inSCADA. Tüm hakları saklıdır.</p>
   </div>
   <script>
     // Open links in external browser
@@ -92,10 +92,16 @@
       });
     });
 
-    // Get version
+    // Get version and apply locale
     if (window.aboutAPI) {
       window.aboutAPI.getVersion().then(v => {
         document.getElementById('version').textContent = 'v' + v;
+      });
+
+      window.aboutAPI.getLocaleStrings().then(strings => {
+        document.getElementById('about-description').innerHTML = strings['about.description'];
+        document.getElementById('link-docs').textContent = strings['about.docs'];
+        document.getElementById('about-copyright').textContent = strings['about.copyright'];
       });
     }
   </script>

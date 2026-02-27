@@ -6,5 +6,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch {
       // Preload might not be available
     }
+
+    try {
+      const strings = await window.inscada.getLocaleStrings();
+      document.getElementById('connecting-title').textContent = strings['connecting.title'];
+      document.getElementById('connecting-info').textContent = strings['connecting.info'];
+    } catch {
+      // Locale might not be available
+    }
   }
 });
