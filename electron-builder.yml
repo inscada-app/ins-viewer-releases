@@ -1,0 +1,17 @@
+appId: com.inscada.viewer
+productName: inSCADA Viewer
+directories:
+  output: dist
+files:
+  - src/**/*
+  - assets/**/*
+  - package.json
+win:
+  icon: assets/icon.ico
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico

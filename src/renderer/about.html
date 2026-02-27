@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkında - inSCADA Viewer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      user-select: none;
+      overflow: hidden;
+    }
+    .about-container {
+      text-align: center;
+      padding: 30px 40px;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .version {
+      font-size: 13px;
+      color: #8888aa;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 13px;
+      color: #aaaacc;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .links a {
+      color: #6c63ff;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .links a:hover {
+      color: #8b83ff;
+      text-decoration: underline;
+    }
+    .copyright {
+      font-size: 11px;
+      color: #555577;
+    }
+  </style>
+</head>
+<body>
+  <div class="about-container">
+    <img class="logo" src="../assets/icon.png" alt="inSCADA" draggable="false"
+         onerror="this.style.display='none'">
+    <h1>inSCADA Viewer</h1>
+    <p class="version" id="version">v1.0.0</p>
+    <p class="description">
+      Web tabanlı SCADA/HMI panellerinizi<br>
+      masaüstü uygulaması olarak görüntüleyin.
+    </p>
+    <div class="links">
+      <a href="https://www.inscada.com" id="link-website">www.inscada.com</a>
+      <a href="https://inscada.gitbook.io" id="link-docs">Dokümantasyon</a>
+    </div>
+    <p class="copyright">&copy; 2025 inSCADA. Tüm hakları saklıdır.</p>
+  </div>
+  <script>
+    // Open links in external browser
+    document.querySelectorAll('a[href^="http"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.aboutAPI) {
+          window.aboutAPI.openExternal(link.href);
+        }
+      });
+    });
+
+    // Get version
+    if (window.aboutAPI) {
+      window.aboutAPI.getVersion().then(v => {
+        document.getElementById('version').textContent = 'v' + v;
+      });
+    }
+  </script>
+</body>
+</html>

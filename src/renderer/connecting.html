@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
+  <title>Bağlanıyor - inSCADA Viewer</title>
+  <link rel="stylesheet" href="connecting.css">
+</head>
+<body>
+  <div class="connecting-container">
+    <div class="icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="20" stroke="#1a73e8" stroke-width="2" fill="none" opacity="0.3"/>
+        <circle cx="24" cy="24" r="8" fill="#1a73e8" opacity="0.5"/>
+        <circle cx="24" cy="24" r="3" fill="#1a73e8"/>
+      </svg>
+    </div>
+    <h2>Bağlanıyor...</h2>
+    <div class="spinner"></div>
+    <p class="url" id="target-url"></p>
+    <p class="info">Sunucu erişilebilir olduğunda otomatik bağlanılacak.</p>
+  </div>
+  <script src="connecting.js"></script>
+</body>
+</html>

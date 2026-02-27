@@ -1,0 +1,16 @@
+{
+  "name": "inscada-viewer",
+  "version": "1.0.0",
+  "description": "inSCADA Desktop Viewer - Electron wrapper for web SCADA/HMI",
+  "main": "src/main/main.js",
+  "scripts": {
+    "dev": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "inSCADA",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.0"
+  }
+}
