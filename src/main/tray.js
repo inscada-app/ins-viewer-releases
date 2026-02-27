@@ -2,6 +2,12 @@ const { Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
 const { t } = require('./locale');
 
+const iconsDir = path.join(__dirname, '../../assets/icons');
+
+function menuIcon(name) {
+  return nativeImage.createFromPath(path.join(iconsDir, `${name}.png`)).resize({ width: 16, height: 16 });
+}
+
 let tray = null;
 
 function create(mainWindow, { onSettings, onQuit }) {
@@ -27,6 +33,7 @@ function create(mainWindow, { onSettings, onQuit }) {
   const contextMenu = Menu.buildFromTemplate([
     {
       label: t('tray.open'),
+      icon: menuIcon('open_in_browser'),
       click: () => {
         mainWindow.show();
         mainWindow.focus();
@@ -34,11 +41,13 @@ function create(mainWindow, { onSettings, onQuit }) {
     },
     {
       label: t('tray.settings'),
+      icon: menuIcon('settings'),
       click: () => onSettings(),
     },
     { type: 'separator' },
     {
       label: t('tray.quit'),
+      icon: menuIcon('power_settings_new'),
       click: () => onQuit(),
     },
   ]);
