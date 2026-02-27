@@ -6,6 +6,7 @@ const ConnectionChecker = require('./connection-checker');
 const tray = require('./tray');
 const ipcHandlers = require('./ipc-handlers');
 const menu = require('./menu');
+const contextMenu = require('./context-menu');
 const locale = require('./locale');
 
 // Set Chromium locale before app is ready
@@ -85,6 +86,8 @@ function createMainWindow() {
     shell.openExternal(url);
     return { action: 'deny' };
   });
+
+  contextMenu.register(mainWindow);
 
   mainWindow.on('close', (e) => {
     if (!isQuitting) {
@@ -196,6 +199,8 @@ function createNewWindow() {
     shell.openExternal(url);
     return { action: 'deny' };
   });
+
+  contextMenu.register(newWin);
 
   if (connectionChecker && connectionChecker.online) {
     newWin.loadURL(settings.url);

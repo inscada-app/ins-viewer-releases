@@ -17,6 +17,13 @@ const translations = {
     'menu.website': 'inSCADA Web Sitesi',
     'menu.docs': 'Dokümantasyon',
 
+    // Context menu
+    'context.fullscreen': 'Tam Ekran',
+    'context.exitFullscreen': 'Tam Ekrandan Çık',
+    'context.zoomIn': 'Yakınlaştır',
+    'context.zoomOut': 'Uzaklaştır',
+    'context.resetZoom': 'Varsayılan Yakınlaştırma',
+
     // Tray
     'tray.open': 'Aç',
     'tray.settings': 'Ayarlar',
@@ -67,6 +74,13 @@ const translations = {
     'menu.about': 'About',
     'menu.website': 'inSCADA Website',
     'menu.docs': 'Documentation',
+
+    // Context menu
+    'context.fullscreen': 'Fullscreen',
+    'context.exitFullscreen': 'Exit Fullscreen',
+    'context.zoomIn': 'Zoom In',
+    'context.zoomOut': 'Zoom Out',
+    'context.resetZoom': 'Reset Zoom',
 
     // Tray
     'tray.open': 'Open',
