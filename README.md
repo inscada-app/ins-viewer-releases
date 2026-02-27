@@ -23,7 +23,7 @@ A lightweight Electron desktop application that wraps web-based SCADA/HMI panels
 
 ## Installation
 
-Download the latest installer from the [Releases](https://github.com/nicatbayram/ins-viewer-releases/releases) page:
+Download the latest installer from the [Releases](https://github.com/inscada-app/ins-viewer-releases/tags) page:
 
 1. Download `inSCADA-Viewer-Setup-x.x.x.exe`
 2. Run the installer and follow the prompts
@@ -126,7 +126,7 @@ MIT — © 2025 inSCADA. All rights reserved.
 
 ### Kurulum
 
-[Releases](https://github.com/nicatbayram/ins-viewer-releases/releases) sayfasından en güncel kurulum dosyasını indirin ve çalıştırın.
+[Releases](https://github.com/inscada-app/ins-viewer-releases/tags) sayfasından en güncel kurulum dosyasını indirin ve çalıştırın.
 
 ### Ayarlar
 
