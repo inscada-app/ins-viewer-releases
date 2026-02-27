@@ -1,6 +1,6 @@
 {
   "name": "inscada-viewer",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "inSCADA Desktop Viewer - Electron wrapper for web SCADA/HMI",
   "main": "src/main/main.js",
   "scripts": {

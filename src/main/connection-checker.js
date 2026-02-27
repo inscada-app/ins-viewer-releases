@@ -42,6 +42,10 @@ class ConnectionChecker {
     return new Promise((resolve) => {
       try {
         const parsedUrl = new URL(this.url);
+        if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+          resolve(false);
+          return;
+        }
         const client = parsedUrl.protocol === 'https:' ? https : http;
         const req = client.request(
           {

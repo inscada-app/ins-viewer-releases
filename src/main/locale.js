@@ -52,7 +52,7 @@ const translations = {
     'splash.loading': 'Yükleniyor...',
 
     // About page
-    'about.description': 'Web tabanlı SCADA/HMI panellerinizi<br>masaüstü uygulaması olarak görüntüleyin.',
+    'about.description': 'Web tabanlı SCADA/HMI panellerinizi\nmasaüstü uygulaması olarak görüntüleyin.',
     'about.docs': 'Dokümantasyon',
     'about.copyright': '© 2025 inSCADA. Tüm hakları saklıdır.',
   },
@@ -110,7 +110,7 @@ const translations = {
     'splash.loading': 'Loading...',
 
     // About page
-    'about.description': 'View your web-based SCADA/HMI panels<br>as a desktop application.',
+    'about.description': 'View your web-based SCADA/HMI panels\nas a desktop application.',
     'about.docs': 'Documentation',
     'about.copyright': '© 2025 inSCADA. All rights reserved.',
   },

@@ -10,7 +10,43 @@ function register(deps) {
   });
 
   ipcMain.handle('save-settings', (_event, settings) => {
-    const saved = settingsStore.save(settings);
+    if (typeof settings !== 'object' || settings === null || Array.isArray(settings)) {
+      throw new Error('Invalid settings');
+    }
+
+    const schema = {
+      url: 'string',
+      autoStart: 'boolean',
+      minimizeToTray: 'boolean',
+      startMinimized: 'boolean',
+      language: 'string',
+      appLanguage: 'string',
+    };
+
+    const sanitized = {};
+    for (const [key, type] of Object.entries(schema)) {
+      if (key in settings) {
+        if (typeof settings[key] !== type) {
+          throw new Error(`Invalid type for ${key}`);
+        }
+        sanitized[key] = settings[key];
+      }
+    }
+
+    // Validate URL protocol
+    if (sanitized.url !== undefined) {
+      try {
+        const parsed = new URL(sanitized.url);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+          throw new Error('Only http and https URLs are allowed');
+        }
+      } catch (e) {
+        if (e.message === 'Only http and https URLs are allowed') throw e;
+        throw new Error('Invalid URL format');
+      }
+    }
+
+    const saved = settingsStore.save(sanitized);
     if (onSettingsSaved) onSettingsSaved(saved);
     return saved;
   });
@@ -24,9 +60,14 @@ function register(deps) {
   });
 
   ipcMain.handle('open-external', (_event, url) => {
-    const allowed = ['https://www.inscada.com', 'https://inscada.gitbook.io'];
-    if (allowed.some((prefix) => url.startsWith(prefix))) {
-      shell.openExternal(url);
+    try {
+      const parsed = new URL(url);
+      const allowedHosts = ['www.inscada.com', 'inscada.gitbook.io'];
+      if ((parsed.protocol === 'https:' || parsed.protocol === 'http:') && allowedHosts.includes(parsed.hostname)) {
+        shell.openExternal(url);
+      }
+    } catch {
+      // Invalid URL — ignore
     }
   });
 
