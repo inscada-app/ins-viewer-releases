@@ -7,6 +7,7 @@ const DEFAULTS = {
   autoStart: false,
   minimizeToTray: true,
   startMinimized: false,
+  language: 'tr',
 };
 
 let filePath;

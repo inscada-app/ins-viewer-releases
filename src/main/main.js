@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, session } = require('electron');
 const path = require('path');
 const settingsStore = require('./settings-store');
 const windowState = require('./window-state');
@@ -6,6 +6,10 @@ const ConnectionChecker = require('./connection-checker');
 const tray = require('./tray');
 const ipcHandlers = require('./ipc-handlers');
 const menu = require('./menu');
+
+// Set Chromium locale before app is ready
+const earlySettings = settingsStore.load();
+app.commandLine.appendSwitch('lang', earlySettings.language || 'tr');
 
 // Single instance lock
 const gotLock = app.requestSingleInstanceLock();
@@ -99,7 +103,7 @@ function createSettingsWindow() {
 
   settingsWindow = new BrowserWindow({
     width: 480,
-    height: 420,
+    height: 500,
     resizable: false,
     parent: mainWindow,
     modal: true,
@@ -193,6 +197,14 @@ function createNewWindow() {
   return newWin;
 }
 
+function applyLanguage(lang) {
+  const locale = lang || 'tr';
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['Accept-Language'] = `${locale},en;q=0.9`;
+    callback({ requestHeaders: details.requestHeaders });
+  });
+}
+
 function showConnecting() {
   if (!mainWindow || mainWindow.isDestroyed()) return;
   mainWindow.loadFile(path.join(__dirname, '../renderer/connecting.html'));
@@ -216,6 +228,9 @@ app.on('second-instance', () => {
 
 app.whenReady().then(() => {
   const settings = settingsStore.load();
+
+  // Apply browser language
+  applyLanguage(settings.language);
 
   // Register autostart
   app.setLoginItemSettings({ openAtLogin: settings.autoStart });
@@ -243,6 +258,7 @@ app.whenReady().then(() => {
     onSettingsSaved: (newSettings) => {
       connectionChecker.setUrl(newSettings.url);
       app.setLoginItemSettings({ openAtLogin: newSettings.autoStart });
+      applyLanguage(newSettings.language);
       // Trigger a re-check with new URL
       connectionChecker.check();
     },

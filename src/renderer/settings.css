@@ -48,8 +48,27 @@ input[type="url"] {
   transition: border-color 0.2s;
 }
 
-input[type="url"]:focus {
+input[type="url"]:focus,
+select:focus {
   border-color: #1a73e8;
+}
+
+select {
+  width: 100%;
+  padding: 8px 12px;
+  background: #2a2a3e;
+  border: 1px solid #3a3a5e;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+select option {
+  background: #2a2a3e;
+  color: #e0e0e0;
 }
 
 .checkbox-group label {

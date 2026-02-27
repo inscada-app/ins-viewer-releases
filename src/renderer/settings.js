@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const urlInput = document.getElementById('url');
+  const language = document.getElementById('language');
   const autoStart = document.getElementById('autoStart');
   const minimizeToTray = document.getElementById('minimizeToTray');
   const startMinimized = document.getElementById('startMinimized');
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load current settings
   const settings = await window.settingsApi.getSettings();
   urlInput.value = settings.url || '';
+  language.value = settings.language || 'tr';
   autoStart.checked = !!settings.autoStart;
   minimizeToTray.checked = !!settings.minimizeToTray;
   startMinimized.checked = !!settings.startMinimized;
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnSave.addEventListener('click', async () => {
     const newSettings = {
       url: urlInput.value.trim() || 'http://localhost:8081',
+      language: language.value,
       autoStart: autoStart.checked,
       minimizeToTray: minimizeToTray.checked,
       startMinimized: startMinimized.checked,
