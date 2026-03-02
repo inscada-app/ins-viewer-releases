@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load current settings
   const settings = await window.settingsApi.getSettings();
   urlInput.value = settings.url || '';
-  appLanguage.value = settings.appLanguage || 'tr';
-  language.value = settings.language || 'tr';
+  appLanguage.value = settings.appLanguage || 'en';
+  language.value = settings.language || 'en';
   autoStart.checked = !!settings.autoStart;
   minimizeToTray.checked = !!settings.minimizeToTray;
   startMinimized.checked = !!settings.startMinimized;

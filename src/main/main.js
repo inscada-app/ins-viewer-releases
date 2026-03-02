@@ -11,8 +11,8 @@ const locale = require('./locale');
 
 // Set Chromium locale before app is ready
 const earlySettings = settingsStore.load();
-app.commandLine.appendSwitch('lang', earlySettings.language || 'tr');
-locale.setLocale(earlySettings.appLanguage || 'tr');
+app.commandLine.appendSwitch('lang', earlySettings.language || 'en');
+locale.setLocale(earlySettings.appLanguage || 'en');
 
 // Single instance lock
 const gotLock = app.requestSingleInstanceLock();
@@ -287,7 +287,7 @@ app.whenReady().then(() => {
       applyLanguage(newSettings.language);
 
       // Handle app language change
-      const newAppLang = newSettings.appLanguage || 'tr';
+      const newAppLang = newSettings.appLanguage || 'en';
       if (newAppLang !== locale.getLocale()) {
         locale.setLocale(newAppLang);
         rebuildMenu();
