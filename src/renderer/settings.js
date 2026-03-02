@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   btnSave.addEventListener('click', async () => {
     const newSettings = {
-      url: urlInput.value.trim() || 'http://localhost:8081',
+      url: urlInput.value.trim() || 'https://inscada.cloud',
       appLanguage: appLanguage.value,
       language: language.value,
       autoStart: autoStart.checked,

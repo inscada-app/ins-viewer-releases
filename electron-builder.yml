@@ -15,3 +15,5 @@ nsis:
   allowToChangeInstallationDirectory: true
   installerIcon: assets/icon.ico
   uninstallerIcon: assets/icon.ico
+  installerLanguages:
+    - en_US

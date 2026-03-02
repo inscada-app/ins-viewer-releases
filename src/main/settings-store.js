@@ -3,7 +3,7 @@ const path = require('path');
 const { app } = require('electron');
 
 const DEFAULTS = {
-  url: 'http://localhost:8081',
+  url: 'https://inscada.cloud',
   autoStart: false,
   minimizeToTray: true,
   startMinimized: false,
